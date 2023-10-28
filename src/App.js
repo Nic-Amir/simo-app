@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "./Components/Header";
+import Navbar from "./components/navbar";
 import "./App.css";
-import Homepage from "./Pages/Homepage";
+import Homepage from "./pages/home-page/home-page";
 import { makeStyles } from "tss-react/mui";
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className={classes.App}>
-        <Header />
+        <Navbar />
         <Routes>
           <Route path="/" element={<Homepage />} />
         </Routes>
