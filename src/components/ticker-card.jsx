@@ -2,10 +2,17 @@ import React from "react";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const CoinCard = ({ props }) => {
+const TickerCard = ({
+  icon,
+  title,
+  description,
+  symbol,
+  price,
+  is_profit,
+  percentage,
+  redirect,
+}) => {
   const navigate = useNavigate();
-
-  const {icon, title, description, symbol, price, is_profit, percentage, redirect} = props;
 
   return (
     <div
@@ -72,4 +79,4 @@ const CoinCard = ({ props }) => {
   );
 };
 
-export default CoinCard;
+export default TickerCard;

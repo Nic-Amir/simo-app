@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@mui/styles";
-import Service from "../Services/Service";
-import { GlobalState } from "../GlobalContext";
+import Service from "../../Services/Service";
+import { GlobalState } from "../../GlobalContext";
 import AliceCarousel from "react-alice-carousel";
-import CoinCard from "./HomeCarousel/coin-card";
+import TickerCard from "../../components/ticker-card";
 
 const useStyles = makeStyles(() => ({
   carousel: {
@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const HomeCarousel = () => {
+const HomePageCarousel = () => {
   const classes = useStyles();
   const { currency, symbol } = GlobalState();
 
@@ -44,21 +44,24 @@ const HomeCarousel = () => {
   };
 
   const coins = trending.map((coin) => {
-    const props = {
-      icon: coin.image,
-      title: coin.symbol,
-      description: coin.name,
-      symbol: symbol,
-      price:
-        coin.current_price > 1
-          ? Service.addCommas(coin?.current_price)
-          : coin?.current_price,
-      is_profit: Service.isProfit(coin?.price_change_percentage_24h) ? "+" : "",
-      percentage: parseFloat(coin?.price_change_percentage_24h).toFixed(2),
-      redirect: "/coins/${coin.id}",
-    };
-
-    return <CoinCard props={props} />;
+    return (
+      <TickerCard
+        icon={coin.image}
+        title={coin.symbol}
+        description={coin.name}
+        symbol={symbol}
+        price={
+          coin.current_price > 1
+            ? Service.addCommas(coin?.current_price)
+            : coin?.current_price
+        }
+        is_profit={
+          Service.isProfit(coin?.price_change_percentage_24h) ? "+" : ""
+        }
+        percentage={parseFloat(coin?.price_change_percentage_24h).toFixed(2)}
+        redirect={`/coins/${coin.id}`}
+      />
+    );
   });
 
   return (
@@ -77,4 +80,4 @@ const HomeCarousel = () => {
   );
 };
 
-export default HomeCarousel;
+export default HomePageCarousel;
