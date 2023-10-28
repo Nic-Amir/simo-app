@@ -1,13 +1,13 @@
 import { makeStyles } from "tss-react/mui";
 import React from "react";
 import { Container, Typography } from "@mui/material";
-import financebanner from "../asset/financebanner.jpg";
-import HomeCarousel from "./HomeCarousel";
+import FinanceBanner from "../../assets/financebanner.jpg";
+import HomePageCarousel from "./home-page-carousel";
 
 const useStyles = makeStyles()(() => ({
   banner: {
     backgroundPosition: "center center",
-    background: `url(${financebanner})`,
+    background: `url(${FinanceBanner})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "auto",
     display: "flex",
@@ -22,7 +22,7 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
-const Banner = () => {
+const HomePageHero = () => {
   const { classes } = useStyles();
   return (
     <div className={classes.banner}>
@@ -33,10 +33,10 @@ const Banner = () => {
         >
           VolGuard
         </Typography>
-        <HomeCarousel />
+        <HomePageCarousel />
       </Container>
     </div>
   );
 };
 
-export default Banner;
+export default HomePageHero;
