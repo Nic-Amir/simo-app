@@ -12,7 +12,7 @@ import { GlobalState } from "../GlobalContext";
 import { makeStyles } from "tss-react/mui";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-const Header = () => {
+const Navbar = () => {
   const navigate = useNavigate();
   const { currency, setCurrency } = GlobalState();
 
@@ -75,4 +75,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Navbar;
