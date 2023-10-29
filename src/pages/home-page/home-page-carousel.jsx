@@ -1,21 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@mui/styles";
-import Service from "../../Services/Service";
+import Service from "../../services/coingecko-service";
 import { GlobalState } from "../../GlobalContext";
 import AliceCarousel from "react-alice-carousel";
 import TickerCard from "../../components/ticker-card";
 
-const useStyles = makeStyles(() => ({
-  carousel: {
-    height: "50%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-}));
-
 const HomePageCarousel = () => {
-  const classes = useStyles();
   const { currency, symbol } = GlobalState();
 
   const [trending, setTrending] = useState([]);
@@ -65,7 +54,7 @@ const HomePageCarousel = () => {
   });
 
   return (
-    <div className={classes.carousel}>
+    <div >
       <AliceCarousel
         mouseTracking
         infinite
