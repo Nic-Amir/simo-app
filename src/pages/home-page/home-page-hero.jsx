@@ -2,8 +2,7 @@ import { makeStyles } from "tss-react/mui";
 import React from "react";
 import { Container, Typography } from "@mui/material";
 import FinanceBanner from "../../assets/financebanner.jpg";
-import HomePageCoingeckoCarousel from "./home-page-coingecko-carousel";
-import HomePageDerivapiCarousel from "./home-page-derivapi-carousel";
+import HomePageCarousel from "./home-page-carousel";
 
 const useStyles = makeStyles()(() => ({
   banner: {
@@ -34,8 +33,7 @@ const HomePageHero = () => {
         >
           VolGuard
         </Typography>
-        <HomePageCoingeckoCarousel />
-        <HomePageDerivapiCarousel />
+        <HomePageCarousel />
       </Container>
     </div>
   );
