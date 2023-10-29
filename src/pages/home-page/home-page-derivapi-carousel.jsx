@@ -3,27 +3,20 @@ import Service from "../../services/coingecko-service";
 import { GlobalState } from "../../GlobalContext";
 import AliceCarousel from "react-alice-carousel";
 import TickerCard from "../../components/ticker-card";
-
-const HomePageCarousel = () => {
+import { getActiveSymbols } from "../../services/derivapi-service";
+import {getIcon}  from "../../utils/icons";
+const HomePageDerivapiCarousel = () => {
   const { currency, symbol } = GlobalState();
 
-  const [trending, setTrending] = useState([]);
-
-  const getTrendingCoins = (e) => {
-    Service.getTrendingCoins(e)
-      .then((response) => {
-        setTrending(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const [activeSymbols, setActiveSymbols] = useState([]);
 
   useEffect(() => {
-    getTrendingCoins(currency);
+    getActiveSymbols().then(data => {
+      setActiveSymbols(data.active_symbols
+        .filter(obj =>  obj.symbol_type === "cryptocurrency"));
+    });
+    console.log("carousel: ", activeSymbols)
   }, [currency]);
-
-  console.log(trending);
 
   const responsive = {
     0: { items: 1 },
@@ -32,12 +25,13 @@ const HomePageCarousel = () => {
     1600: { items: 4 },
   };
 
-  const coins = trending.map((coin) => {
+  const coins = activeSymbols.map((coin) => {
+
     return (
       <TickerCard
-        icon={coin.image}
+        icon={getIcon(coin.symbol)} // TODO: dynamically render the icon since it's not in API
         title={coin.symbol}
-        description={coin.name}
+        description={coin.display_name}
         symbol={symbol}
         price={
           coin.current_price > 1
@@ -45,10 +39,10 @@ const HomePageCarousel = () => {
             : coin?.current_price
         }
         is_profit={
-          Service.isProfit(coin?.price_change_percentage_24h) ? "+" : ""
+          Service.isProfit(coin?.price_change_percentage_24h) ? "+" : "-"
         }
         percentage={parseFloat(coin?.price_change_percentage_24h).toFixed(2)}
-        redirect={`/coins/${coin.id}`}
+        redirect={`/coins/${coin.symbol}`}
       />
     );
   });
@@ -69,4 +63,4 @@ const HomePageCarousel = () => {
   );
 };
 
-export default HomePageCarousel;
+export default HomePageDerivapiCarousel;
