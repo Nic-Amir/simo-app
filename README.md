@@ -9,8 +9,6 @@ Utils are a collection of general-purpose functions or classes that offer a wide
 In broader context, Utils files can be imported inside Helper files.
 ## What is a config?
 Config is file where we are going to add our enums, objects and other hard-coded variables.
-Do we agree on these things or if there is any other thing which I missed, feel free to comment in the thread. The main purpose of this thread is to be on the same page so we can restrict to only one plan instead of following different approaches.
-
 
 # Component Structuring Guidelines
 
@@ -44,7 +42,7 @@ Do we agree on these things or if there is any other thing which I missed, feel 
 
 1. Choose descriptive and meaningful names. Names should clearly indicate the component's purpose and functionality.
 
-2. Use camelCase for component names (e.g., `button`, `inputField`) and PascalCase for component filenames (e.g., `Button.js`, `InputField.js`).
+2. Use PascalCase for component names (e.g., `HomePage`, `InputField`) and kebab-case for filenames (e.g., `home-page.js`, `input-field.js`).
 
 - NOTE: component name is different from file name
   -- filename: `text-component.jsx`
