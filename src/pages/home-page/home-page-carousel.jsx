@@ -1,40 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@mui/styles";
-import Service from "../../Services/Service";
+import Service from "../../services/coingecko-service";
 import { GlobalState } from "../../GlobalContext";
 import AliceCarousel from "react-alice-carousel";
 import TickerCard from "../../components/ticker-card";
-
-const useStyles = makeStyles(() => ({
-  carousel: {
-    height: "50%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-}));
-
+import { getActiveSymbols } from "../../services/derivapi-service";
+import {getIcon}  from "../../utils/icons";
 const HomePageCarousel = () => {
-  const classes = useStyles();
   const { currency, symbol } = GlobalState();
 
-  const [trending, setTrending] = useState([]);
-
-  const getTrendingCoins = (e) => {
-    Service.getTrendingCoins(e)
-      .then((response) => {
-        setTrending(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const [activeSymbols, setActiveSymbols] = useState([]);
+  const [coingeckoTrending, setCoingeckoTrending] = useState([]);
 
   useEffect(() => {
-    getTrendingCoins(currency);
+   // get coingecko data
+   Service.getTrendingCoins(currency)
+   .then((response) => {
+     setCoingeckoTrending(response.data);
+   })
+   .catch((err) => {
+     console.log(err);
+   });
+    console.log("carousel: ", coingeckoTrending);
+    
+    //get derivapi data
+    getActiveSymbols().then(data => {
+      setActiveSymbols(data.active_symbols
+        .filter(obj =>  obj.symbol_type === "cryptocurrency"));
+    });
+    console.log("carousel: ", activeSymbols)
   }, [currency]);
-
-  console.log(trending);
 
   const responsive = {
     0: { items: 1 },
@@ -43,7 +37,7 @@ const HomePageCarousel = () => {
     1600: { items: 4 },
   };
 
-  const coins = trending.map((coin) => {
+  const coingecko_coins = coingeckoTrending.map((coin) => {
     return (
       <TickerCard
         icon={coin.image}
@@ -64,8 +58,29 @@ const HomePageCarousel = () => {
     );
   });
 
+  const deriv_symbols = activeSymbols.map((d_symbol) => {
+    return (
+      <TickerCard
+        icon={getIcon(d_symbol.symbol)} // TODO: dynamically render the icon since it's not in API
+        title={d_symbol.symbol}
+        description={d_symbol.display_name}
+        symbol={symbol}
+        price={
+          d_symbol.current_price > 1
+            ? Service.addCommas(d_symbol?.current_price)
+            : d_symbol?.current_price
+        }
+        is_profit={
+          Service.isProfit(d_symbol?.price_change_percentage_24h) ? "+" : "-"
+        }
+        percentage={parseFloat(d_symbol?.price_change_percentage_24h).toFixed(2)}
+        redirect={`/coins/${d_symbol.symbol}`}
+      />
+    );
+  });
+
   return (
-    <div className={classes.carousel}>
+    <div >
       <AliceCarousel
         mouseTracking
         infinite
@@ -74,7 +89,17 @@ const HomePageCarousel = () => {
         disableDotsControls
         responsive={responsive}
         autoPlay
-        items={coins}
+        items={coingecko_coins}
+      />
+      <AliceCarousel
+        mouseTracking
+        infinite
+        autoPlayInterval={1000}
+        animationDuration={1000}
+        disableDotsControls
+        responsive={responsive}
+        autoPlay
+        items={deriv_symbols}
       />
     </div>
   );

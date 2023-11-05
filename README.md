@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+# Folder Structuring Guidelines
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## What is a Container?
+A container corresponds to a HTML Container in which multiple Divs are present as a collection. In terms of React Lifecycle we may refer the Container as a collection of Components. And Components should be pure or dummy components. All calculations and objects should be present in Containers and these values are passed as props to the Components.
+## What is a Component?
+A component is a reusable piece of code which can be used anywhere and it should be pure meanwhile there is no logic inside the component. You pass the props and it should display the Elements corresponding to the props passed in.
+## What is Utils?
+Utils are a collection of general-purpose functions or classes that offer a wide range of functionalities that can be used across different parts of a codebase.
+In broader context, Utils files can be imported inside Helper files.
+## What is a config?
+Config is file where we are going to add our enums, objects and other hard-coded variables.
 
-## Available Scripts
+# Component Structuring Guidelines
 
-In the project directory, you can run:
+## Atomic:
 
-### `npm start`
+#### Atomic components are designed to have a single, well-defined responsibility and are highly reusable. They should be as self-contained and independent as possible.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. **Single Responsibility:** Each atomic component should have a single, clearly defined responsibility. For example, create separate components for buttons, inputs, labels, and other UI elements.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. **Independence:** Atomic components should be independent and not rely on internal state or external dependencies. They should accept all necessary data through props.
 
-### `npm test`
+3. **Reusability:** Aim to create atomic components that can be reused across different parts of the application. These components should provide consistent functionality and appearance.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Pure and Stateless:
 
-### `npm run build`
+#### Pure and stateless components should be free from side effects and external dependencies.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Stateless:** Pure components should not manage their own internal state. They should receive all data and behavior via props from parent components.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. **Deterministic:** The output of pure components should be solely determined by their input (props). There should be no side effects or dependencies on external state.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. **No Side Effects:** Pure components should not have side effects. They should not perform network requests, modify global state, or affect the application outside their rendering.
 
-### `npm run eject`
+4. **Reusability:** Pure components should be highly reusable. You should be able to use the same pure component in multiple parts of the application without unexpected behavior.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+5. **Predictability:** Pure components should be predictable and easy to reason about. Given their props, their behavior and output should be straightforward to understand.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+6. **Testability:** Pure components should be easy to test because they do not have internal state or side effects. Testing can be done by passing different sets of props and verifying the output.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Naming Conventions:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Choose descriptive and meaningful names. Names should clearly indicate the component's purpose and functionality.
 
-## Learn More
+2. Use PascalCase for component names (e.g., `HomePage`, `InputField`) and kebab-case for filenames (e.g., `home-page.js`, `input-field.js`).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- NOTE: component name is different from file name
+  -- filename: `text-component.jsx`
+  -- component name: `TextComponent` / `<TextComponent />`
+  -- putting it together: `import TextComponent from './text-component.jsx'`

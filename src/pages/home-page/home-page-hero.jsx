@@ -12,9 +12,9 @@ const useStyles = makeStyles()(() => ({
     backgroundSize: "auto",
     display: "flex",
     justifyContent: "center",
+    height:"70vh",
   },
   bannerContent: {
-    height: 400,
     display: "flex",
     flexDirection: "column",
     paddingTop: 25,
